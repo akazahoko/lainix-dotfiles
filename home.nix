@@ -5,23 +5,22 @@
   home.homeDirectory = "/home/lain";
   home.stateVersion = "26.05";
 
-  xdg.mimeApps = {
+  qt = {
     enable = true;
-    defaultApplications = {
-      "application/pdf" = [ "org.kde.okular.desktop" ];
-    };
+    platformTheme.name = "qt6ct";
+    style.name = "kvantum";
   };
 
   programs.firefox = {
     enable = true;
     configPath = "/home/lain/.config/mozilla/firefox";
 
-
     profiles.default.extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
       ublock-origin
       bitwarden
       privacy-badger
       pywalfox
+      stylus
     ];
   };
 
@@ -40,28 +39,11 @@
       userSettings = {
         "workbench.colorTheme" = "Wal";
         "locale" = "zh-tw";
+        "editor.tabSize" = 4;
+        "editor.insertSpaces" = true;
+        "editor.fontFamily" = "FiraCode Nerd Font Mono";
+        "editor.fontSize" = 14;
       };
     };
-  };
-
-  programs.zsh = {
-    enable = true;
-    shellAliases = {
-      "nfu" = "sudo nix flake update --flake /home/lain/nixos";
-      "nrsf" = "sudo nixos-rebuild switch --flake /home/lain/nixos#";
-    };
-    oh-my-zsh.enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-    ];
-    initContent = ''
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-    '';
   };
 }
